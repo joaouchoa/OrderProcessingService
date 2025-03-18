@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-OrderProcessingService.Worker-9cf26a76-1970-4119-9d9c-a37cca1d4466</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderProcessingService.Application\OrderProcessingService.Application.csproj" />
+    <ProjectReference Include="..\OrderProcessingService.Infrastructure\OrderProcessingService.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
