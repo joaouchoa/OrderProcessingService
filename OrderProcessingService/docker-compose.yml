@@ -13,8 +13,8 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"      # comunicação entre serviços
-      - "15672:15672"    # painel de controle
+      - "5672:5672"
+      - "15672:15672"
 
   api:
     build:
@@ -22,6 +22,14 @@ services:
       dockerfile: OrderProcessingService.API/Dockerfile
     ports:
       - "5000:8080"
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  worker:
+    build:
+      context: .
+      dockerfile: OrderProcessingService.Worker/Dockerfile
     depends_on:
       - mongodb
       - rabbitmq
