@@ -18,4 +18,10 @@
     <ProjectReference Include="..\OrderProcessingService.Application\OrderProcessingService.Application.csproj" />
     <ProjectReference Include="..\OrderProcessingService.Infrastructure\OrderProcessingService.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+	  <Content Remove="appsettings.json" />
+	  <Content Remove="appsettings.Development.json" />
+  </ItemGroup>
+	
 </Project>

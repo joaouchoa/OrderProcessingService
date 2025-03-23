@@ -1,26 +1,22 @@
-# Build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+WORKDIR /src
 
-# Copia solução e todos os .csproj necessários
 COPY *.sln ./
+COPY OrderProcessingService.API/*.csproj OrderProcessingService.API/              
 COPY OrderProcessingService.Worker/*.csproj OrderProcessingService.Worker/
 COPY OrderProcessingService.Application/*.csproj OrderProcessingService.Application/
 COPY OrderProcessingService.Domain/*.csproj OrderProcessingService.Domain/
 COPY OrderProcessingService.Infrastructure/*.csproj OrderProcessingService.Infrastructure/
-COPY OrderProcessingService.API/*.csproj OrderProcessingService.API/
 
-# Restaura os pacotes
+
 RUN dotnet restore
 
-# Copia o restante dos arquivos
 COPY . .
 
-# Publica o Worker
-RUN dotnet publish OrderProcessingService.Worker/OrderProcessingService.Worker.csproj -c Release -o /out
+RUN dotnet publish OrderProcessingService.Worker/OrderProcessingService.Worker.csproj -c Release -o /app/publish
 
-# Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /out ./
+COPY --from=build /app/publish .
+
 ENTRYPOINT ["dotnet", "OrderProcessingService.Worker.dll"]
