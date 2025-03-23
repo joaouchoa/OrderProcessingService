@@ -1,0 +1,30 @@
+﻿version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"      # comunicação entre serviços
+      - "15672:15672"    # painel de controle
+
+  api:
+    build:
+      context: .
+      dockerfile: OrderProcessingService.API/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+volumes:
+  mongo-data:
